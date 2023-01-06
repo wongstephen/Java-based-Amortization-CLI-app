@@ -36,14 +36,55 @@ public class Main {
     public static void main(String[] args) {
         // initialize vars
         int term = 0; // years
-        double r = 0; // int rate
+        double rate = 0; // int rate
         double balance = 0; // principal balance
         boolean continueApp = true;
+        //library
+        Scanner sc = new Scanner(System.in);
 
         while (continueApp) {
             welcomeHeader();
-            System.out.println("Enter loan term (years)");
-            term = sc.nextInt();
+            System.out.println("Enter loan length in years (term): ");
+            Calcs loan = new Calcs(term, rate, balance);
+
+            while (term <= 0){
+                double input = sc.nextDouble();
+                if(input%1 == 0){ // test for if the user enters a whole and non-negative int
+                    term = (int) input;
+                    loan.setTerm(term);
+                } else {
+                    System.out.println("Whole integers are required. Please enter number again: ");
+                }
+            }
+
+            System.out.println("Enter loan amount (principal): ");
+            while (balance <= 0 ){
+                double input = sc.nextDouble();
+                if(input > 0){ // test for if the user enters a non-negative double
+                    balance = input;
+                    loan.setBalance(input);
+                } else {
+                    System.out.println("Non-negative and non-zero numbers are required. Please enter number again: ");
+                }
+            }
+
+            System.out.println("Enter interest rate (percentage): ");
+            while (rate <= 0){
+                double input = sc.nextDouble();
+                if(input > 0){ // test for if the user enters a non-negative double
+                    rate = input;
+                    loan.setRate(input);
+                } else {
+                    System.out.println("Non-negative and non-zero numbers are required. Please enter number again: ");
+                }
+            }
+
+
+            System.out.println("\n" + loan.toString() + "\n");
+            System.out.println(loan.getSched());
+            System.out.println(loan.getSummary());
+            System.out.println(loan.getPayment());
+            // End of app input from user to restart.
             if (!restartApp()) {
                 continueApp = false;
             }
