@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 public class Calcs {
     private int term;
     private double rate;
@@ -21,25 +23,36 @@ public class Calcs {
         this.balance = term;
     }
     public String getSched(){
+        DecimalFormat df = new DecimalFormat("###,###,###,###.00");
         double payment = this.getPayment();
         double startingBalance = this.balance;
         double interestPayment = 0;
         double principalPayment = 0;
         double endingBal = 0;
 
-        String result = this.term + " Years Amortization Schedule\n";
-        result += "Month | Starting Bal | Interest Paid | Principal Paid | Ending Balance \n";
+        String result = "";
+        result += "=============================================================\n";
+        result += this.term + " Years Amortization Schedule\n";
+        result += "=============================================================\n\n";
+        result += "Mo | Starting Bal | Interest | Principal | Ending Balance \n\n";
         for (int i = 1; i <= this.term*12; i++) { // todo change this later to actual months
-            interestPayment = this.rate/100/12*startingBalance;
             startingBalance -= principalPayment;
+            interestPayment = this.rate/100/12*startingBalance;
             principalPayment = payment-interestPayment;
             endingBal = startingBalance - principalPayment;
-            result += i + " | " + Math.round(startingBalance*Math.pow(10,2))/Math.pow(10,2) + " | " + Math.round(interestPayment*Math.pow(10,2))/Math.pow(10,2) + " | " + Math.round(principalPayment*Math.pow(10,2))/Math.pow(10,2) + " | " + Math.round(endingBal*Math.pow(10,2))/Math.pow(10,2) +"\n";
+            result += String.format("%02d", i) + " | $"
+                    + df.format(Math.round(startingBalance*Math.pow(10,2))/Math.pow(10,2)) + " | $"
+                    + df.format(Math.round(interestPayment*Math.pow(10,2))/Math.pow(10,2)) + " | $"
+                    + df.format(Math.round(principalPayment*Math.pow(10,2))/Math.pow(10,2)) + " | $"
+                    + df.format(Math.round(endingBal*Math.pow(10,2))/Math.pow(10,2))
+                    +"\n";
         }
         return result;
     }
 
     public String getSummary(){
+        double totalInt = 0;
+        double totalPrin = 0
         return "Summary";
     }
 
