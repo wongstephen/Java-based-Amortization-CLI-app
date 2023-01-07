@@ -40,6 +40,9 @@ public class Calcs {
             interestPayment = this.rate/100/12*startingBalance;
             principalPayment = payment-interestPayment;
             endingBal = startingBalance - principalPayment;
+            if (endingBal < 0){
+                break;
+            }
             result += String.format("%02d", i) + " | $"
                     + df.format(Math.round(startingBalance*Math.pow(10,2))/Math.pow(10,2)) + " | $"
                     + df.format(Math.round(interestPayment*Math.pow(10,2))/Math.pow(10,2)) + " | $"
@@ -51,9 +54,33 @@ public class Calcs {
     }
 
     public String getSummary(){
+        DecimalFormat df = new DecimalFormat("$###,###,###,###.00");
+
+        double payment = this.getPayment();
+        double startingBalance = this.balance;
+        double interestPayment = 0;
+        double principalPayment = 0;
+
         double totalInt = 0;
-        double totalPrin = 0
-        return "Summary";
+        double totalPrin = 0;
+        int totalNumPayments = 0;
+
+        for (int i = 1; i<=this.term*12; i++) {
+            startingBalance -= principalPayment;
+            interestPayment = this.rate/100/12*startingBalance;
+            principalPayment = payment - interestPayment;
+
+            totalInt += interestPayment;
+            totalPrin += principalPayment;
+            totalNumPayments++;
+        }
+
+        return  "================ SUMMARY ================ \n" +
+                "Monthly Payment: " + df.format(this.getPayment()) +
+                "\nTotal Principal Paid: " + df.format(totalPrin) +
+                "\nTotal Interest Paid: " + df.format(totalInt) +
+                "\nTotal Number of Payments: " +  totalNumPayments +
+                "\n========================================= \n";
     }
 
     public double getPayment(){

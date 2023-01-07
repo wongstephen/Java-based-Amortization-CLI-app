@@ -10,12 +10,13 @@ public class Main {
         //library
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Do you want to restart the program?: ");
-        String res = sc.next();
+        System.out.println("Do you want to restart the program? (yes/no): ");
+        String res = sc.next().toLowerCase();
         if (res.equals("no") || res.equals("n")) {
             return false;
+        } else if (res.equals("yes") || res.equals("y")) {
+            return true;
         }
-        return true;
     }
 
     public static void welcomeHeader() {
@@ -79,11 +80,10 @@ public class Main {
                 }
             }
 
+            System.out.println("\n" + loan.toString() + "\n"); // Confirm loan input
+            System.out.println(loan.getSched()); // Amortization schedule
+            System.out.println(loan.getSummary()); // Print final summary
 
-            System.out.println("\n" + loan.toString() + "\n");
-            System.out.println(loan.getSched());
-            System.out.println(loan.getSummary());
-            System.out.println(loan.getPayment());
             // End of app input from user to restart.
             if (!restartApp()) {
                 continueApp = false;
