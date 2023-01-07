@@ -7,16 +7,25 @@ import java.io.File;
 
 public class Main {
     public static boolean restartApp() {
-        //library
+        // library
         Scanner sc = new Scanner(System.in);
-
+        // vars
+        boolean repeat = true;
+        boolean valid = false;
         System.out.println("Do you want to restart the program? (yes/no): ");
-        String res = sc.next().toLowerCase();
-        if (res.equals("no") || res.equals("n")) {
-            return false;
-        } else if (res.equals("yes") || res.equals("y")) {
-            return true;
+        while (!valid) {
+            String res = sc.next().toLowerCase();
+            if (res.equals("no") || res.equals("n")) {
+                repeat = false;
+                valid = true;
+            } else if (res.equals("yes") || res.equals("y")) {
+                repeat = true;
+                valid = true;
+            } else {
+                System.out.println("Enter yes or no.");
+            }
         }
+        return repeat;
     }
 
     public static void welcomeHeader() {
@@ -88,6 +97,11 @@ public class Main {
             if (!restartApp()) {
                 continueApp = false;
             }
+
+            //reset the app variables
+            term = 0;
+            rate = 0;
+            balance = 0;
         }
         System.out.println("Thank you for using the amortization schedule app");
     }

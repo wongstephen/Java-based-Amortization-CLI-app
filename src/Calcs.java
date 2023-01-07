@@ -79,6 +79,7 @@ public class Calcs {
                 "Monthly Payment: " + df.format(this.getPayment()) +
                 "\nTotal Principal Paid: " + df.format(totalPrin) +
                 "\nTotal Interest Paid: " + df.format(totalInt) +
+                "\nTotal Amount Paid: " + df.format(totalInt + totalPrin) +
                 "\nTotal Number of Payments: " +  totalNumPayments +
                 "\n========================================= \n";
     }
